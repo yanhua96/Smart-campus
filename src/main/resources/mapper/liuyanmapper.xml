@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuhan.smartcampus.dao.LiuYanMapper" >
+    <select id="getLiuYan" resultType="com.liuhan.smartcampus.entity.LiuYan">
+        select * from t_liuyan
+    </select>
+    <insert id="insertLiuYan" parameterType="com.liuhan.smartcampus.entity.LiuYan">
+        insert into t_liuyan (#{liuyan_id},#{liuyan_title},#{liuyan_content},#{date},#{user})
+    </insert>
+    <select id="getLiuYanById" resultType="com.liuhan.smartcampus.entity.LiuYan" parameterType="int">
+        select * from t_liuyan where liuyan_id = #{liuyan_id}
+    </select>
+</mapper>

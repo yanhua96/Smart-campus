@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuhan.smartcampus.dao.CartMapper" >
+    <select id="getCart" resultType="com.liuhan.smartcampus.entity.Cart">
+        select * from t_cart
+    </select>
+    <select id="getCartById" resultType="com.liuhan.smartcampus.entity.Cart" parameterType="int">
+        select * from t_cart where goods_id=#{goods_id}
+    </select>
+    <insert id="inserCart" parameterType="com.liuhan.smartcampus.entity.Cart">
+        insert into t_cart values (#{goods_id},#{goods_name},#{goods_miaoshu},#{goods_pic})
+    </insert>
+    <delete id="deleteCart" parameterType="int" >
+        delete from t_cart where goods_id=#{t_id}
+    </delete>
+    <delete id="deleteCartAll">
+        delete from t_cart
+    </delete>
+</mapper>

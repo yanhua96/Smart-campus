@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="">
+
+    <title>智慧订餐后台管理</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/common/bootstrap-4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/admin/adminindex.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/common/dashboard.css" rel="stylesheet">
+<!--    <link href="/css/carousel.css" rel="stylesheet">-->
+    <script src="/js/shopping_cart/shopping_cart.js"></script>
+</head>
+
+<body>
+
+<div th:replace="~{common/nav :: topbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+
+
+        <div th:replace="~{admin/leftBar :: adminleftBar}"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <section class="jumbotron text-center" style="background-color: #ffffff">、
+                <!-- 密码模块 -->
+                <div class="container" th:if="${lettbar}==1">
+                    <form action="/upAdmin">请输入新密码：<input name="user_pw" /><button type="submit">确认修改</button><span th:text="${mes}"></span></form>
+
+                </div>
+                <span th:text="${lettbar}"></span>
+                <!-- 用户模块 -->
+                <div class="container" th:if="${lettbar}==2">
+                    <table>
+                        <tr>
+                            <th>账号</th>
+                            <th>昵称</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>住址</th>
+                            <th>电话</th>
+                            <th>邮箱</th>
+                            <th>操作</th>
+                        </tr>
+
+                        <tr class="table_content" th:each="u:${users}">
+                            <td ><span th:text="${u.user_id}">这是一个商品</span></td>
+                            <td ><span th:text="${u.user_name}">这是一个商品</span></td>
+                            <td ><span th:text="${u.user_realname}">这是一个商品</span></td>
+                            <td ><span th:text="${u.user_sex}">这是一个商品</span></td>
+                            <td ><span th:text="${u.user_address}">这是一个商品</span></td>
+                            <td ><span th:text="${u.user_tel}">这是一个商品</span></td>
+                            <td ><span th:text="${u.user_email}">这是一个商品</span></td>
+                            <td class="delete_img"><img src="/img/delete_icon.jpg" th:value="${u.user_id}" class="deleteUser"/></td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <!-- 菜品类别管理 -->
+                <div class="container" th:if="${lettbar}==3">
+                    <table>
+                        <tr class="table_head">
+                            <th colspan="4">序号</th>
+                            <th>种类名称</th>
+                            <th>操作</th>
+                        </tr>
+
+                        <tr class="table_content" th:each="c:${catelogs}">
+                            <td ><span th:text="${c.catelog_id}">这是一个商品</span></td>
+                            <td ><span th:text="${c.catelog_name}">这是一个商品</span></td>
+                            <td class="delete_img"><img src="/img/delete_icon.jpg" th:value="${c.catelog_id}" class="deleteCatelog"/></td>
+                        </tr>
+                        <tr class="end_pay">
+                            <!--<td class="is_all"><input id="all" type="checkbox" checked="checked"/>全选</td>-->
+                            <td colspan="3" class="pay_button_div">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    新增
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">请填写以下内容</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <!-- 填写地址 -->
+                                                    <input type="text" class="form-control" name="order_songhuodizhi" id="zhonglei" placeholder="种类">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                    <button type="button"  class="btn btn-default" data-dismiss="modal" id="btn-primary" onclick="getInt()">添加种类</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                 <!--菜品管理-->
+                <div class="container" th:if="${lettbar}==4">
+                    <table>
+                        <tr class="table_head">
+                            <th colspan="4">序号</th>
+                            <th>类别</th>
+                            <th>菜名</th>
+                            <th>介绍</th>
+                            <th>图片</th>
+                            <th>价格</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr class="table_content" th:each="g:${goods}">
+                            <td ><span th:text="${g.goods_id}">这是一个商品</span></td>
+                            <td ><span th:text="${g.goods_type}">这是一个商品</span></td>
+                            <td ><span th:text="${g.goods_name}">这是一个商品</span></td>
+                            <td ><span th:text="${g.goods_miaoshu}">这是一个商品</span></td>
+                            <td ><span >查看详情</span></td>
+                            <td ><span th:text="${g.goods_pic}">这是一个商品</span></td>
+                            <td class="delete_img"><img src="/img/delete_icon.jpg" th:value="${g.goods_id}" class="deleteGoods"/></td>
+                        </tr>
+                        <tr class="end_pay">
+                            <!--<td class="is_all"><input id="all" type="checkbox" checked="checked"/>全选</td>-->
+                            <td colspan="3" class="pay_button_div">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#goodsModal">
+                                    新增
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="goodsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalgoods">请填写以下内容</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <!-- 填写地址 -->
+                                                    <input type="text" class="form-control" name="order_songhuodizhi" id="goods_name" placeholder="名称">
+                                                    <input type="text" class="form-control" name="order_songhuodizhi" id="goods_miaoshu" placeholder="描述">
+                                                    <input type="text" class="form-control" name="order_songhuodizhi" id="goods_pic" placeholder="单价">
+                                                    <input type="text" class="form-control" name="order_songhuodizhi" id="goods_shichangjia" placeholder="市场价">
+                                                    <input type="text" class="form-control" name="order_songhuodizhi" id="goods_tejia" placeholder="特价">
+                                                    <input type="text" class="form-control" name="order_songhuodizhi" id="goods_isnottejia" placeholder="非特价">
+                                                    <input type="text" class="form-control" name="order_songhuodizhi" id="goods_tupian" placeholder="图片地址">
+                                                    <input type="text" class="form-control" name="order_songhuodizhi" id="goods_type" placeholder="菜品种类">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                    <button type="button"  class="btn btn-default" data-dismiss="modal" id="btn-goods" onclick="getGoods()">添加种类</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <!-- 订单模块 -->
+                <div class="container" th:if="${lettbar}==5">
+                    <table>
+                        <tr >
+                            <th>序号</th>
+                            <th>用户信息</th>
+                            <th>订单编号</th>
+                            <th>下单日期</th>
+                            <th>送货地址</th>
+                            <th>付款方式</th>
+                            <th>订单状态</th>
+                            <th>操作</th>
+                        </tr>
+
+                        <tr class="table_content" th:each="o:${orders}">
+                            <td ><span th:text="${o.order_id}">这是一个商品</span></td>
+                            <td ><span th:text="${o.order_user_id}">这是一个商品</span></td>
+                            <td ><span th:text="${o.order_bianhao}">这是一个商品</span></td>
+                            <td ><span th:text="${o.order_date}">这是一个商品</span></td>
+                            <td ><span th:text="${o.order_songhuodizhi}">这是一个商品</span></td>
+                            <td ><span th:text="${o.order_fukuanfangshi}">这是一个商品</span></td>
+                            <td ><span th:text="${o.order_zhuangtai}==1?'待处理':'已处理'">这是一个商品</span></td>
+                            <td><button th:value="${o.order_bianhao}" class="OrderImpl">订单详情</button></td>
+                            <td class="delete_img"><img src="/img/delete_icon.jpg" th:value="${o.order_id}" class="delOrder"/></td>
+                            <td class="delete_img"><button th:value="${o.order_id}" class="upOrder">授权</button></td>
+                        </tr>
+                    </table>
+
+                </div>
+                <!--详细订单-->
+                <div class="container" th:if="${lettbar}==6">
+                    <table>
+                        <tr class="table_head">
+                            <th colspan="4">菜品名称</th>
+                            <th>购买数量</th>
+                            <th>购买价格</th>
+                        </tr>
+
+                        <tr class="table_content" th:each="oru:${orderItemBy}">
+                            <td ><span th:text="${oru.name}">这是一个商品</span></td>
+                            <td ><span th:text="${oru.num}">这是一个商品</span></td>
+                            <td ><span th:text="${oru.pic}*${oru.num}">这是一个商品</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/js/common/jquery.min.js"></script>
+<!--user-defined-js-->
+<script src="/js/buyer/cart.js"></script>
+
+<script src="/js/common/popper.min.js"></script>
+<script src="/css/common/bootstrap-4.1.1/dist/js/bootstrap.min.js"></script>
+<script src="/js/common/holder.min.js"></script>
+
+<!-- Icons -->
+<script src="/js/common/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+
+<!--;----- Graphs -----;-->
+<script src="/js/common/Chart.min.js"></script>
+
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none"
+     style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;">
+    <defs>
+        <style type="text/css"></style>
+    </defs>
+    <text x="0" y="25" style="font-weight:bold;font-size:25pt;font-family:Arial, Helvetica, Open Sans, sans-serif">
+        500x500
+    </text>
+</svg>
+<script>
+    function getInt() {
+        /*var ads = [];
+        // speakers代表tbody的id
+        $("#tal").find("tr").each(function() {
+            // this代表每一个tr标签，tdArr代表每一个tr标签下面的所有td标签
+            var tdArr = $(this).children();
+            var dict = tdArr.eq(3).html().substr(49,1);//标题
+            ads.push(dict)
+        });
+        console.log(ads)*/
+        //获取到模态框的两组数据
+        var json={"order_songhuodizhi":address= $("#zhonglei").val() }
+        //使用ajax进入控制器
+        /*        $.ajax("inserOrder",{"order_songhuodizhi":address= $("#address").val(), "order_fukuanfangshi":$("#payment").val() },function (data){ alert("已经飞速下单！");})*/
+        $.ajax({
+            url:"insertCatelog",
+            data:{"id":address= $("#zhonglei").val()},
+            success:function (data){ alert("添加完成！");}
+        })
+    }
+</script>
+<script>
+    function getGoods() {
+        //获取到模态框的两组数据
+        var json={"order_songhuodizhi":address= $("#zhonglei").val() }
+        //使用ajax进入控制器
+        /*        $.ajax("inserOrder",{"order_songhuodizhi":address= $("#address").val(), "order_fukuanfangshi":$("#payment").val() },function (data){ alert("已经飞速下单！");})*/
+        $.ajax({
+            url:"insertGoods",
+            data:{
+                "goods_name":goods_name= $("#goods_name").val(),
+                "goods_miaoshu":goods_miaoshu= $("#goods_miaoshu").val(),
+                "goods_pic":goods_pic= $("#goods_pic").val(),
+                "goods_shichangjia":goods_shichangjia= $("#goods_shichangjia").val(),
+                "goods_tejia":goods_tejia= $("#goods_tejia").val(),
+                "goods_isnottejia":goods_isnottejia= $("#goods_isnottejia").val(),
+                "goods_tupian":goods_tupian= $("#goods_tupian").val(),
+                "goods_type":goods_type= $("#goods_type").val()
+            },
+            success:function (data){ if(data){
+                if(data!=""){
+                    alert(data);
+                }else {
+                    alert("添加完成！");
+                }
+            }}
+        })
+    }
+</script>
+</body>
+</html>

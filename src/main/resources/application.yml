@@ -1,0 +1,37 @@
+# SpringBoot配置
+server:
+  port: 6061
+spring:
+  thymeleaf:
+    cache: false #关闭缓存
+    mode: HTML5 #设置模板类型
+    encoding: utf-8  #设置编码
+    prefix: classpath:/templates/
+    suffix: .html
+  resources:
+    static-locations: classpath:/static/, classpath:/templates/
+  # MyBatis配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.157.128:3306/sqldb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  devtools:
+    restart:
+      enabled: false
+    http:
+    converters:
+      preferred-json-mapper: fastjsonqew
+      encoding:
+        force: true
+        charset: utf-8
+        enabled: true
+# 指定dao层的mapper文件
+mybatis-plus:
+  #信息输出设置
+  # xml地址
+  mapper-locations: classpath:mapper/*mapper.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  # type-aliases-package: ***   #自己的实体类地址
+  type-aliases-package: com.liuhan.smartcampus.entity
+# 指定redis的主机地

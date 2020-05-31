@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuhan.smartcampus.dao.AdminMapper" >
+    <select id="getAdmin" resultType="com.liuhan.smartcampus.entity.Admin" parameterType="com.liuhan.smartcampus.entity.Admin">
+    select * from t_admin where user_id=#{user_id} and user_pw=#{user_pw}
+</select>
+    <update id="upAdmin" parameterType="com.liuhan.smartcampus.entity.Admin">
+        update t_admin set user_pw = #{user_pw} where user_name = #{user_name}
+    </update>
+
+</mapper>

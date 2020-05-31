@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuhan.smartcampus.dao.OrderItemMapper" >
+    <select id="getOrderItemBy" resultType="com.liuhan.smartcampus.entity.OrderItem" parameterType="String">
+        select * from t_orderitem where order_bianhao=#{order_bianhao}
+    </select>
+    <select id="getDetails" parameterType="int" resultType="com.liuhan.smartcampus.entity.Details">
+        select tg.goods_name,tg.goods_pic,toi.goods_quantity from t_goods as tg join t_orderitem as toi on tg.goods_id=toi.goods_id where toi.order_id=#{order_id}
+    </select>
+    <insert id="insertOrderItem" parameterType="com.liuhan.smartcampus.entity.OrderItem">
+        insert into t_orderitem (orderItem_id,order_bianhao,goods_id,goods_quantity) values (#{orderItem_id},#{order_bianhao},#{goods_id},#{goods_quantity})
+    </insert>
+</mapper>

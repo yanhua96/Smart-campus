@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="">
+    <title>购物车</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/css/common/bootstrap-4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/css/common/dashboard.css" rel="stylesheet">
+<!--    <link href="/css/carousel.css" rel="stylesheet">-->
+    <script src="/js/shopping_cart/shopping_cart.js"></script>
+</head>
+<body>
+<div th:replace="~{common/nav :: topbar}"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{buyer/leftBar :: leftBar}"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+           <!-- <div th:replace="~{buyer/fastJump :: fastJump}"></div>-->
+            <section class="jumbotron text-center" style="background-color: #ffffff">
+                <div class="container">
+                    <h3 >开饭啦！</h3>
+                </div>
+            </section>
+            <div class="album py-5 bg-light" id="gongnengqu">
+                <div class="cart_content">
+                    <div th:if="null!=${session.carts}">
+                        <table >
+                            <tr class="table_head">
+                                <th colspan="4">菜品名称</th>
+                                <th>价格</th>
+                                <th>数量</th>
+                                <th>总金额</th>
+                                <th>删除</th>
+                            </tr>
+                            <tbody id="tal">
+                            <tr class="table_content" th:each="o:${session.carts}">
+                                <td class="input_checkbox">
+                                    <input id="1" class="goodscheck" type="checkbox" checked="checked" name="checkbox" th:value="${o.getGoods_id()}"/></td>
+                                <td class="title" colspan="2"><span th:text="${o.getGoods_name()}">这是一个商品</span></td>
+                                <td class="cost">￥<span th:text="${o.getGoods_pic()}">20.00</span>元</td>
+                                <td class="count"><span class="minus">-</span><span class="number" th:text="${o.getGoods_num()}">1</span><span class="add">+</span>
+                                </td>
+                                <td class="per_sum">￥<span th:with="sum=${o.getGoods_pic()}*1" th:text="${sum}">40.00</span>元</td>
+                                <td class="delete_img"><img src="/img/delete_icon.jpg" th:value="${o.getGoods_id()}" class="deleteShopCar"/></td>
+                            </tr>
+                            </tbody>
+                            <tr class="end_pay">
+                                <!--<td class="is_all"><input id="all" type="checkbox" checked="checked"/>全选</td>-->
+                                <td class="space" colspan="3"></td>
+                                <td colspan="2" class="all_sum">总价：￥<span>500.00</span>元</td>
+                                <td colspan="3" class="pay_button_div">
+                                    <a class="btn btn-primary" href="/emptyCart">清空</a>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                        付款
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">请填写以下内容</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <!-- 填写地址 -->
+                                                        <input type="text" class="form-control" name="order_songhuodizhi" id="address" placeholder="地址">
+                                                    </div>
+                                                    <!-- 选择付款方式 -->
+                                                    <div>
+                                                        <label for="payment">付款方式:</label>
+                                                        <select id="payment" name="order_fukuanfangshi">
+                                                            <option>微信</option>
+                                                            <option>支付宝</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                    <button type="button"  class="btn btn-default" data-dismiss="modal" id="btn-primary" onclick="getInt()">生成订单</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div th:if="null!=${orderByUserId}">
+                        <table>
+                            <tr >
+                                <th>用户信息</th>
+                                <th>订单编号</th>
+                                <th>下单日期</th>
+                                <th>订单状态</th>
+                                <th>送货地址</th>
+                                <th>付款方式</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr th:each="o:${orderByUserId}">
+                                <td ><span th:text="${o.order_id}">这是一个商品</span></td>
+                                <td><span th:text="${o.order_bianhao}">这是一个商品</span></td>
+                                <td ><span th:text="${o.order_date}">这是一个商品</span></td>
+                                <td ><span th:text="${o.order_zhuangtai}==1?'正在处理':'已受理'">这是一个商品</span></td>
+                                <td ><span th:text="${o.order_songhuodizhi}">这是一个商品</span></td>
+                                <td ><span th:text="${o.order_fukuanfangshi}">这是一个商品</span></td>
+                                <td ><span th:text="${o.order_user_id}">这是一个商品</span></td>
+                                <td class="delete_img"><img src="/img/delete_icon.jpg" th:value="${o.order_bianhao}" class="deleteOrder"/></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+               <!-- <%&#45;&#45;分页条&#45;&#45;%>-->
+                <div class="container" >
+                    <div class="row">
+                        <!-- 分页结果信息 -->
+                        <!-- 导航条 -->
+                        <div class="col-md-6" id="page_nav">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FOOTER -->
+        </main>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/js/common/jquery.min.js"></script>
+<!--user-defined-js-->
+<script src="/js/buyer/cart.js"></script>
+<script src="/js/common/popper.min.js"></script>
+<script src="/css/common/bootstrap-4.1.1/dist/js/bootstrap.min.js"></script>
+<script src="/js/common/holder.min.js"></script>
+<!-- Icons -->
+<script src="/js/common/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+<!--;----- Graphs -----;-->
+<script src="/js/common/Chart.min.js"></script>
+<script>
+    function getInt() {
+        /*var ads = [];
+        // speakers代表tbody的id
+        $("#tal").find("tr").each(function() {
+            // this代表每一个tr标签，tdArr代表每一个tr标签下面的所有td标签
+            var tdArr = $(this).children();
+            var dict = tdArr.eq(3).html().substr(49,1);//标题
+            ads.push(dict)
+        });
+        console.log(ads)*/
+        //获取到模态框的两组数据
+        var json={"order_songhuodizhi":address= $("#address").val(), "order_fukuanfangshi":$("#payment").val() }
+        //使用ajax进入控制器
+/*        $.ajax("inserOrder",{"order_songhuodizhi":address= $("#address").val(), "order_fukuanfangshi":$("#payment").val() },function (data){ alert("已经飞速下单！");})*/
+        $.ajax({
+            url:"inserOrder",
+            data:{"order_songhuodizhi":address= $("#address").val(), "order_fukuanfangshi":$("#payment").val()},
+            success:function (data){ alert("已经飞速下单！");}
+        })
+    }
+</script>
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none"
+     style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;">
+    <defs>
+        <style type="text/css"></style>
+    </defs>
+    <text x="0" y="25" style="font-weight:bold;font-size:25pt;font-family:Arial, Helvetica, Open Sans, sans-serif">
+        500x500
+    </text>
+</svg>
+<footer class="container ">
+    <p class="float-right"><a href="#">Back to top</a></p>
+    <p>© 2017-2018 Company, Inc. · <a href="#">Privacy</a> · <a href="https://getbootstrap.com/docs/4.1/examples/carousel/#">Terms</a></p>
+</footer>
+
+</body>
+</html>

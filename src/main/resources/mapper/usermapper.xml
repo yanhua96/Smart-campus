@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuhan.smartcampus.dao.UserMapper" >
+    <select id="getUserByName" resultType="com.liuhan.smartcampus.entity.User" parameterType="String">
+        select * from t_user where user_name=#{name}
+    </select>
+    <select id="getUserById" resultType="com.liuhan.smartcampus.entity.User" parameterType="Integer">
+        select * from t_user where user_id=#{id}
+    </select>
+    <insert id="insertUser" parameterType="com.liuhan.smartcampus.entity.User">
+        insert into t_user(user_id,user_name,user_pw,user_sex,user_tel,user_email) values (#{user_id},#{user_name},#{user_pw},#{user_sex},#{user_tel},#{user_email})
+    </insert>
+    <select id="getUser" resultType="com.liuhan.smartcampus.entity.User">
+        select * from t_user
+    </select>
+    <delete id="delUser" parameterType="int">
+        delete from t_user where user_id=#{user_id}
+    </delete>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuhan.smartcampus.dao.CatelogMapper" >
+    <select id="getCatelog" resultType="com.liuhan.smartcampus.entity.Catelog">
+        select * from t_catelog
+    </select>
+    <select id="getCatelogByName" parameterType="String" resultType="com.liuhan.smartcampus.entity.Catelog">
+        select * from t_catelog where catelog_name=#{catelog_name}
+    </select>
+    <delete id="delCatelog" parameterType="int">
+        delete from t_catelog where catelog_id=#{catelog_id}
+    </delete>
+    <insert id="insertCatelog" parameterType="com.liuhan.smartcampus.entity.Catelog">
+        insert into t_catelog(catelog_name) values (#{catelog_name})
+    </insert>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuhan.smartcampus.dao.OrderMapper" >
+    <select id="selectOrder" resultType="com.liuhan.smartcampus.entity.Order">
+        select * from t_order
+    </select>
+    <select id="getOrderByUserId" resultType="com.liuhan.smartcampus.entity.Order" parameterType="int">
+        select * from t_order where order_user_id=#{order_user_id}
+    </select>
+    <update id="updateOrder" parameterType="com.liuhan.smartcampus.entity.Order">
+        update t_order set order_zhuangtai=#{order_zhuangtai} where order_id =#{order_id}
+    </update>
+    <delete id="delOrder">
+        delete from t_order
+    </delete>
+    <insert id="insertOrder" parameterType="com.liuhan.smartcampus.entity.Order">
+        insert into t_order (order_bianhao,order_date,order_zhuangtai,order_songhuodizhi,order_fukuanfangshi,order_user_id) values (#{order_bianhao},#{order_date},#{order_zhuangtai},#{order_songhuodizhi},#{order_fukuanfangshi},#{order_user_id})
+    </insert>
+    <delete id="delOrderById" parameterType="int">
+        delete from t_order where order_id = #{order_id}
+    </delete>
+</mapper>
